@@ -5,14 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LukChin</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Itim&family=Mali:wght@400;700&display=swap" rel="stylesheet">
-
 <style>
+    /* 1. โหลดฟอนต์ผ่าน Google Fonts 直接 (Directly) */
+    @import url('https://fonts.googleapis.com/css2?family=Itim&family=Mali:wght@400;700&display=swap');
+
+    /* 2. บังคับให้ทุกส่วนในหน้าเว็บใช้ฟอนต์ที่โหลดมา */
+    * {
+        font-family: 'Itim', 'Mali', cursive !important;
+    }
+
     body {
-        /* 2. เปลี่ยน font-family ตรงนี้ */
-        font-family: 'Itim', cursive; 
         background: #f4f4f4;
         display: flex;
         justify-content: center;
@@ -47,8 +49,7 @@
     h1 {
         font-size: 28px; 
         margin-bottom: 20px;
-        /* เปลี่ยน font-family ให้เป็นฟอนต์ที่โหลดมา */
-        font-family: 'Mali', cursive;
+        font-family: 'Mali', cursive !important; /* ใช้ฟอนต์ Mali สำหรับหัวข้อ */
         font-weight: 700;
         color: hotpink;
     }
@@ -62,14 +63,12 @@
 
     .btn {
         padding: 10px 25px;
-        font-size: 20px;
+        font-size: 22px; /* ขยายขนาดให้อ่านง่ายขึ้นในมือถือ */
         border-radius: 30px;
         border: none;
         cursor: pointer;
         transition: 0.3s;
-        /* เปลี่ยน font-family ตรงนี้ด้วย */
-        font-family: 'Itim', cursive;
-        min-width: 90px;
+        min-width: 100px;
         touch-action: manipulation;
     }
 
@@ -94,6 +93,7 @@
         width: 140px;
     }
 
+    /* สไตล์สำหรับ Overlay ตอนกด Yes */
     .overlay {
         position: fixed;
         inset: 0;
@@ -143,7 +143,6 @@
 </div>
 
 <script>
-// (ส่วน JavaScript เดิมของคุณใช้ได้เลยครับ ไม่ต้องแก้ไขอะไร)
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const mainImage = document.getElementById("mainImage");
@@ -159,14 +158,17 @@ const images = [
 noBtn.addEventListener("click", () => {
     clickCount++;
     mainImage.src = images[clickCount % images.length];
+
     if (clickCount < 3) {
         const randomX = Math.random() * 50 + 20; 
         const randomY = Math.random() * 40 + 10; 
+
         noBtn.style.position = "absolute";
         noBtn.style.left = randomX + "%";
         noBtn.style.bottom = randomY + "%";
         noBtn.style.right = "auto";
     }
+
     if (clickCount >= 3) {
         noBtn.style.display = "none";
         yesBtn.classList.add("center");
@@ -188,5 +190,6 @@ yesBtn.addEventListener("click", () => {
     }, 50);
 });
 </script>
+
 </body>
 </html>
