@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LukChin</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 450px; /* ปรับความกว้างให้พอดีมือถือ */
+        height: 450px;
+        border: 3px dashed hotpink;
+        border-radius: 25px;
+        background: #ddd;
+        text-align: center;
+        padding: 20px;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    .image-box {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto 15px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    h1 {
+        font-size: 24px; /* ลดขนาดหัวข้อลงเล็กน้อย */
+        margin-bottom: 20px;
+        font-family: 'Comic Sans MS', cursive;
+        color: hotpink;
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: space-around; /* ให้ปุ่มแยกห่างกันซ้าย-ขวา */
+        padding: 0 10px;
+        margin-top: 30px;
+    }
+
+    .btn {
+        padding: 10px 25px; /* ลดขนาดปุ่มลง */
+        font-size: 18px;    /* ลดขนาดฟอนต์ */
+        border-radius: 30px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+        font-family: 'Comic Sans MS', cursive;
+        min-width: 80px;
+        touch-action: manipulation; /* ป้องกันการซูมเวลาจิ้มรัวๆ */
+    }
+
+    .yes {
+        background: #00b050;
+        color: white;
+    }
+
+    .no {
+        background: #ff2d2d;
+        color: white;
+        position: absolute; /* เพื่อให้กระโดดได้ */
+        right: 15%;
+        bottom: 50px;
+    }
+
+    /* เมื่อปุ่ม Yes ต้องมาอยู่ตรงกลาง */
+    .center {
+        position: absolute;
+        left: 50% !important;
+        bottom: 60px !important;
+        transform: translateX(-50%);
+        width: 120px;
+    }
+
+    /* ===== รูปใหญ่เต็มจอ ===== */
+    .overlay {
+        position: fixed;
+        inset: 0;
+        background: #000000cc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 1s ease;
+        z-index: 999;
+    }
+
+    .overlay.show {
+        opacity: 1;
+    }
+
+    .big-image {
+        width: 90vw;
+        height: 90vh;
+        object-fit: contain;
+        transform: scale(0.7);
+        transition: transform 1.2s ease;
+    }
+
+    .overlay.show .big-image {
+        transform: scale(1);
+    }
+</style>
+</head>
+<body>
+
+<div class="container" id="mainBox">
+
+    <div class="image-box">
+        <img id="mainImage" 
+             src="https://github.com/GodjiKung/LukChin-only/blob/main/image.png?raw=true" 
+             width="150" 
+             height="150" 
+             style="object-fit: contain;">
+    </div>
+
+    <h1>LukChin Na Rak Mai</h1>
+
+    <div class="btn-group">
+        <button class="btn yes" id="yesBtn" style="position: absolute; left: 15%; bottom: 50px;">Yes</button>
+        <button class="btn no" id="noBtn">No</button>
+    </div>
+
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const mainImage = document.getElementById("mainImage");
+const mainBox = document.getElementById("mainBox");
+
+let clickCount = 0;
+
+const images = [
+    "https://raw.githubusercontent.com/GodjiKung/LukChin-only/main/image-removebg-preview%20(1).png",
+    "https://raw.githubusercontent.com/GodjiKung/LukChin-only/main/image-removebg-preview%20(2).png",
+    "https://raw.githubusercontent.com/GodjiKung/LukChin-only/main/image-removebg-preview%20(3).png"
+];
+
+noBtn.addEventListener("click", () => {
+    clickCount++;
+    mainImage.src = images[clickCount % images.length];
+
+    if (clickCount < 3) {
+        // สุ่มตำแหน่งโดยเว้นระยะจากขอบจอมากขึ้นเพื่อไม่ให้ทับกับ Yes
+        const randomX = Math.random() * 50 + 20; 
+        const randomY = Math.random() * 40 + 10; 
+
+        noBtn.style.position = "absolute";
+        noBtn.style.left = randomX + "%";
+        noBtn.style.bottom = randomY + "%";
+        noBtn.style.right = "auto";
+    }
+
+    if (clickCount >= 3) {
+        noBtn.style.display = "none";
+        yesBtn.classList.add("center");
+        yesBtn.style.fontSize = "28px"; // ขยายใหญ่ขึ้นนิดหน่อยให้กดง่ายๆ
+    }
+});
+
+yesBtn.addEventListener("click", () => {
+    mainBox.style.display = "none";
+    const overlay = document.createElement("div");
+    overlay.classList.add("overlay");
+    const bigImg = document.createElement("img");
+    bigImg.src = "https://raw.githubusercontent.com/GodjiKung/LukChin-only/main/%E0%B8%99%E0%B8%B1%E0%B8%97%E0%B8%A0%E0%B8%9E%20%E0%B8%AA%E0%B8%B2%E0%B8%A5%E0%B8%B5.png";
+    bigImg.classList.add("big-image");
+    overlay.appendChild(bigImg);
+    document.body.appendChild(overlay);
+    setTimeout(() => {
+        overlay.classList.add("show");
+    }, 50);
+});
+</script>
+
+</body>
+</html>
