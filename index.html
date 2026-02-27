@@ -5,9 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LukChin</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Itim&family=Mali:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
     body {
-        font-family: Arial, sans-serif;
+        /* 2. เปลี่ยน font-family ตรงนี้ */
+        font-family: 'Itim', cursive; 
         background: #f4f4f4;
         display: flex;
         justify-content: center;
@@ -19,7 +24,7 @@
 
     .container {
         width: 90%;
-        max-width: 450px; /* ปรับความกว้างให้พอดีมือถือ */
+        max-width: 450px;
         height: 450px;
         border: 3px dashed hotpink;
         border-radius: 25px;
@@ -40,29 +45,32 @@
     }
 
     h1 {
-        font-size: 24px; /* ลดขนาดหัวข้อลงเล็กน้อย */
+        font-size: 28px; 
         margin-bottom: 20px;
-        font-family: 'Comic Sans MS', cursive;
+        /* เปลี่ยน font-family ให้เป็นฟอนต์ที่โหลดมา */
+        font-family: 'Mali', cursive;
+        font-weight: 700;
         color: hotpink;
     }
 
     .btn-group {
         display: flex;
-        justify-content: space-around; /* ให้ปุ่มแยกห่างกันซ้าย-ขวา */
+        justify-content: space-around;
         padding: 0 10px;
         margin-top: 30px;
     }
 
     .btn {
-        padding: 10px 25px; /* ลดขนาดปุ่มลง */
-        font-size: 18px;    /* ลดขนาดฟอนต์ */
+        padding: 10px 25px;
+        font-size: 20px;
         border-radius: 30px;
         border: none;
         cursor: pointer;
         transition: 0.3s;
-        font-family: 'Comic Sans MS', cursive;
-        min-width: 80px;
-        touch-action: manipulation; /* ป้องกันการซูมเวลาจิ้มรัวๆ */
+        /* เปลี่ยน font-family ตรงนี้ด้วย */
+        font-family: 'Itim', cursive;
+        min-width: 90px;
+        touch-action: manipulation;
     }
 
     .yes {
@@ -73,21 +81,19 @@
     .no {
         background: #ff2d2d;
         color: white;
-        position: absolute; /* เพื่อให้กระโดดได้ */
+        position: absolute;
         right: 15%;
         bottom: 50px;
     }
 
-    /* เมื่อปุ่ม Yes ต้องมาอยู่ตรงกลาง */
     .center {
         position: absolute;
         left: 50% !important;
         bottom: 60px !important;
         transform: translateX(-50%);
-        width: 120px;
+        width: 140px;
     }
 
-    /* ===== รูปใหญ่เต็มจอ ===== */
     .overlay {
         position: fixed;
         inset: 0;
@@ -120,7 +126,6 @@
 <body>
 
 <div class="container" id="mainBox">
-
     <div class="image-box">
         <img id="mainImage" 
              src="https://github.com/GodjiKung/LukChin-only/blob/main/image.png?raw=true" 
@@ -129,23 +134,22 @@
              style="object-fit: contain;">
     </div>
 
-    <h1>LukChin Na Rak Mai</h1>
+    <h1> LukChin Na Rak Mai </h1>
 
     <div class="btn-group">
         <button class="btn yes" id="yesBtn" style="position: absolute; left: 15%; bottom: 50px;">Yes</button>
         <button class="btn no" id="noBtn">No</button>
     </div>
-
 </div>
 
 <script>
+// (ส่วน JavaScript เดิมของคุณใช้ได้เลยครับ ไม่ต้องแก้ไขอะไร)
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const mainImage = document.getElementById("mainImage");
 const mainBox = document.getElementById("mainBox");
 
 let clickCount = 0;
-
 const images = [
     "https://raw.githubusercontent.com/GodjiKung/LukChin-only/main/image-removebg-preview%20(1).png",
     "https://raw.githubusercontent.com/GodjiKung/LukChin-only/main/image-removebg-preview%20(2).png",
@@ -155,22 +159,18 @@ const images = [
 noBtn.addEventListener("click", () => {
     clickCount++;
     mainImage.src = images[clickCount % images.length];
-
     if (clickCount < 3) {
-        // สุ่มตำแหน่งโดยเว้นระยะจากขอบจอมากขึ้นเพื่อไม่ให้ทับกับ Yes
         const randomX = Math.random() * 50 + 20; 
         const randomY = Math.random() * 40 + 10; 
-
         noBtn.style.position = "absolute";
         noBtn.style.left = randomX + "%";
         noBtn.style.bottom = randomY + "%";
         noBtn.style.right = "auto";
     }
-
     if (clickCount >= 3) {
         noBtn.style.display = "none";
         yesBtn.classList.add("center");
-        yesBtn.style.fontSize = "28px"; // ขยายใหญ่ขึ้นนิดหน่อยให้กดง่ายๆ
+        yesBtn.style.fontSize = "32px"; 
     }
 });
 
@@ -188,6 +188,5 @@ yesBtn.addEventListener("click", () => {
     }, 50);
 });
 </script>
-
 </body>
 </html>
